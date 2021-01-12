@@ -27,7 +27,7 @@ export default class SubFood extends Component{
   state = {
     first: null,
     second: null,
-    thirt: null,
+    third: null,
   }
 
   getExample = async () => {
@@ -36,7 +36,7 @@ export default class SubFood extends Component{
       'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
     };
     
-    Axios.get('http://127.0.0.1:8000/api/image/', {
+    Axios.get('http://10.0.2.2:8000/api/detail/', {
 
   }, 
     headers
@@ -44,7 +44,7 @@ export default class SubFood extends Component{
       console.log('REESesult:' , result.data)
       that.setState({first: result.data[0]})
       that.setState({second: result.data[1]})
-      that.setState({thirt: result.data[1]})
+      that.setState({third: result.data[1]})
     }).catch((err) => {
       console.log('CAATCcathc err:', JSON.stringify(err))
     })
@@ -57,17 +57,25 @@ export default class SubFood extends Component{
 
         </View>
         <Text style={styles.textStyle}>
-            SUBFOOODDD SAYFASI FUCK
+            SUBFOOODDD PAGE
         </Text>
         <TouchableOpacity onPress={() => {
           this.props.navigation.navigate('SubFood')
         }} style={styles.textStyle}>{this.state.first}</TouchableOpacity>
         <TouchableOpacity onPress={() => {
           this.getExample()
+          console.log('first state: ', this.state.first)
           //this.props.navigation.navigate('MainFood')
         }}  style={{backgroundColor:'yellow'}}>
-          <Text>TAKE PHOTO</Text>
+          <Text>GET RESULTS</Text>
         </TouchableOpacity>
+        <View>
+      {this.state &&
+        <Text>
+          Results: {this.state.first}
+        </Text>
+      }
+    </View>
       </View>
     );
   }

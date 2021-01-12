@@ -36,25 +36,25 @@ export default class Main extends Component{
     thirt: null,
   }
 
-  getExample = async () => {
-    var that = this
-    const headers = {
-      'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
-    };
+  // getExample = async () => {
+  //   var that = this
+  //   const headers = {
+  //     'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
+  //   };
     
-    Axios.get('http://127.0.0.1:8000/api/image/', {
+  //   Axios.get('http://127.0.0.1:8000/api/image/', {
 
-  }, 
-    headers
-    ).then(function (result){
-      console.log('REESesult:' , result.data)
-      that.setState({first: result.data[0]})
-      that.setState({second: result.data[1]})
-      that.setState({thirt: result.data[1]})
-    }).catch((err) => {
-      console.log('CAATCcathc err:', JSON.stringify(err))
-    })
-  }
+  // }, 
+  //   headers
+  //   ).then(function (result){
+  //     console.log('REESesult:' , result.data)
+  //     that.setState({first: result.data[0]})
+  //     that.setState({second: result.data[1]})
+  //     that.setState({thirt: result.data[1]})
+  //   }).catch((err) => {
+  //     console.log('CAATCcathc err:', JSON.stringify(err))
+  //   })
+  // }
   render(){
     return(
 
@@ -68,10 +68,10 @@ export default class Main extends Component{
         <TouchableOpacity onPress={() => {
           this.props.navigation.navigate('SubFood')
         }} style={styles.textStyle}>
-          <Text>{this.state.first}</Text>
+          <Text>Go to subfood page</Text>
           </TouchableOpacity>
         <TouchableOpacity onPress={() => {
-          this.getExample()
+          // this.getExample()
           this.props.navigation.navigate('MainFood')
         }}  style={{backgroundColor:'yellow'}}>
           <Text>TAKE PHOTO</Text>
