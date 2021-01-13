@@ -22,7 +22,7 @@ import { Header,  LearnMoreLinks,  Colors,  DebugInstructions,  ReloadInstructio
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import Axios from 'axios'
 
-
+// store yada state
 export default class SubFood extends Component{
   state = {
     first: null,
@@ -59,10 +59,6 @@ export default class SubFood extends Component{
         <Text style={styles.textStyle}>
             Subfood Page
         </Text>
-        {/* <TouchableOpacity onPress={() => {
-          this.props.navigation.navigate('SubFood')
-        }} style={styles.textStyle}>{this.state.first}
-        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => {
           this.getExample()
           // console.log('first state: ', this.state.first)
@@ -70,23 +66,6 @@ export default class SubFood extends Component{
         }}  style={{backgroundColor:'yellow'}}>
           <Text style={styles.textStyle2}>To Get Results Press</Text>
         </TouchableOpacity>
-        <View>
-        <Text style={styles.textStyle2}>
-          Results:
-        </Text>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('')}}>
-      {this.state &&
-        <Text style={styles.textStyle2}>First Result is: {this.state.first}</Text>}
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => {this.props.navigation.navigate('')}}>
-      {this.state &&
-        <Text style={styles.textStyle2}>Second Result is: {this.state.second}</Text>}
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => {this.props.navigation.navigate('')}}>
-      {this.state &&
-        <Text style={styles.textStyle2}>Third Result is: {this.state.third}</Text>}
-      </TouchableOpacity>
-    </View>
       </View>
     );
   }

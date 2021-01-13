@@ -27,6 +27,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import Axios from 'axios'
+import store from '../assets/config/store'
 
 
 export default class Main extends Component{
@@ -72,6 +73,8 @@ export default class Main extends Component{
           </TouchableOpacity> */}
         <TouchableOpacity onPress={() => {
           // this.getExample()
+
+          store._deneme('deneme')
           this.props.navigation.navigate('MainFood')
         }}  style={{backgroundColor:'yellow'}}>
           <Text style={styles.sectionTitle}>Choose PHOTO</Text>

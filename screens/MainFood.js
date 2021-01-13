@@ -12,10 +12,15 @@ import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions }
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import {  launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Axios from 'axios'
+import store from '../assets/config/store'
 
 export default class Main extends Component{
   state = {
     photo: null,
+  }
+  
+  state_2 = {
+    main_food: null
   }
 
   takePhoto = () => {
@@ -39,6 +44,32 @@ export default class Main extends Component{
     // })
   }
 
+  state = {
+    first: null,
+    second: null,
+    third: null,
+  }
+
+  getExample = async () => {
+    var that = this
+    const headers = {
+      'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
+    };
+    
+    Axios.get('http://10.0.2.2:8000/api/detail/', {
+
+  }, 
+    headers
+    ).then(function (result){
+      console.log('REESesult:' , result.data)
+      that.setState({first: result.data[0]})
+      that.setState({second: result.data[1]})
+      that.setState({third: result.data[2]})
+    }).catch((err) => {
+      console.log('CAATCcathc err:', JSON.stringify(err))
+    })
+  }
+
 
   render(){
     return (
@@ -55,12 +86,40 @@ export default class Main extends Component{
         </TouchableOpacity> */}
         <TouchableOpacity onPress={() => {this.takePhoto()}}  
           style={{backgroundColor:'yellow'}} title='bu buton'>
-          <Text>Fotograf secimi</Text>
+          <Text>Fotograf cekimi</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {this.props.navigation.navigate('SubFood')}}
+        {/* <TouchableOpacity onPress={() => {this.props.navigation.navigate('SubFood')}}
         style={{backgroundColor:'blue'}} title='subfood button'>
         <Text> Sub Food Direct</Text>
+        </TouchableOpacity> */}
+
+        <TouchableOpacity onPress={() => {this.getExample()
+          // console.log('first state: ', this.state.first)
+          //this.props.navigation.navigate('MainFood')
+        }}  style={{backgroundColor:'yellow'}}>
+          <Text style={styles.textStyle2}>To Get Results Press</Text>
+          <Text>{store.deneme}</Text>
         </TouchableOpacity>
+        <View>
+        <Text style={styles.textStyle2}>
+          Results:
+        </Text>
+          <TouchableOpacity onPress={() => {
+            this.sendRequst_2(this.state.first)
+            this.props.navigation.navigate('Main')
+          }}>
+      {this.state &&
+        <Text style={styles.textStyle2}>First Result is: {this.state.first}</Text>}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {this.sendRequst_2(this.state.second)}}>
+      {this.state &&
+        <Text style={styles.textStyle2}>Second Result is: {this.state.second}</Text>}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {this.sendRequst_2(this.state.third)}}>
+      {this.state &&
+        <Text style={styles.textStyle2}>Third Result is: {this.state.third}</Text>}
+      </TouchableOpacity>
+    </View>
       </View>
     )
   };
@@ -152,6 +211,35 @@ export default class Main extends Component{
   //   return data;
   // };
 
+
+
+  sendRequst_2 = (choose) => {
+    console.log("THIS IS NAME OFM",choose)
+  fetch("http://10.0.2.2:8000/api/detail/", {  
+    method: "POST",
+    body: JSON.stringify({
+      main_food: choose
+    }),
+    headers: {'Content-Type': 'application/json' }
+  })
+    .then(response => response.text())
+    .then(function (response) {
+      console.log("response :", response);
+})
+    .catch(function (error) {
+      console.log("error from image :", error);
+    }
+ )};
+
+ createFormData_2 = () => {
+  const data = new FormData();
+  data.append('main_food', JSON.stringify(this.state_2.main_food))
+
+  console.log("DATA_FOOD_NAME: ", data);
+
+  return data;
+};
+  
 }
 
 const styles = StyleSheet.create({
