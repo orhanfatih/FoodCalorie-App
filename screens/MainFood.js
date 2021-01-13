@@ -12,7 +12,6 @@ import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions }
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import {  launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Axios from 'axios'
-import axios from 'axios';
 
 export default class Main extends Component{
   state = {
@@ -26,13 +25,18 @@ export default class Main extends Component{
       // maxHeight: 550,
       // quality: 1,
     }
-    launchImageLibrary(options, response => {
-      // console.log('Response = ', response);
-      if (response.uri) {
+    launchCamera(options, response => {
       this.setState({ photo: response })
-      }
+      this.sendRequst()
     })
-    // this.sendRequst()
+
+    // launchImageLibrary(options, response => {
+    //   // console.log('Response = ', response);
+    //   if (response.uri) {
+    //   this.setState({ photo: response })
+    //   this.sendRequst()
+    //   }
+    // })
   }
 
 
@@ -45,13 +49,17 @@ export default class Main extends Component{
         <Text style={styles.textStyle}>
           bu bir 2.sayfa yazisiidir
         </Text>
-        <TouchableOpacity onPress={() => {this.sendRequst()}}  
+        {/* <TouchableOpacity onPress={() => {this.sendRequst()}}  
           style={{backgroundColor:'blue'}} title='bu buton ikinci'>
           <Text>Fotograf yukle</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => {this.takePhoto()}}  
           style={{backgroundColor:'yellow'}} title='bu buton'>
-          <Text>Fotograf secmek icin galeri ac</Text>
+          <Text>Fotograf secimi</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {this.props.navigation.navigate('SubFood')}}
+        style={{backgroundColor:'blue'}} title='subfood button'>
+        <Text> Sub Food Direct</Text>
         </TouchableOpacity>
       </View>
     )

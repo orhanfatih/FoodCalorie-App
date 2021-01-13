@@ -63,18 +63,18 @@ export default class Main extends Component{
 
         </View>
         <Text style={styles.textStyle}>
-          bu bir deneme yazisiidir
+          FoodCalorie App
         </Text>
-        <TouchableOpacity onPress={() => {
+        {/* <TouchableOpacity onPress={() => {
           this.props.navigation.navigate('SubFood')
         }} style={styles.textStyle}>
           <Text>Go to subfood page</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         <TouchableOpacity onPress={() => {
           // this.getExample()
           this.props.navigation.navigate('MainFood')
         }}  style={{backgroundColor:'yellow'}}>
-          <Text>TAKE PHOTO</Text>
+          <Text style={styles.sectionTitle}>Choose PHOTO</Text>
         </TouchableOpacity>
       </View>
     );

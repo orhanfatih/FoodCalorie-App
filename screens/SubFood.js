@@ -44,7 +44,7 @@ export default class SubFood extends Component{
       console.log('REESesult:' , result.data)
       that.setState({first: result.data[0]})
       that.setState({second: result.data[1]})
-      that.setState({third: result.data[1]})
+      that.setState({third: result.data[2]})
     }).catch((err) => {
       console.log('CAATCcathc err:', JSON.stringify(err))
     })
@@ -57,29 +57,39 @@ export default class SubFood extends Component{
 
         </View>
         <Text style={styles.textStyle}>
-            SUBFOOODDD PAGE
+            Subfood Page
         </Text>
-        <TouchableOpacity onPress={() => {
+        {/* <TouchableOpacity onPress={() => {
           this.props.navigation.navigate('SubFood')
-        }} style={styles.textStyle}>{this.state.first}</TouchableOpacity>
+        }} style={styles.textStyle}>{this.state.first}
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => {
           this.getExample()
-          console.log('first state: ', this.state.first)
+          // console.log('first state: ', this.state.first)
           //this.props.navigation.navigate('MainFood')
         }}  style={{backgroundColor:'yellow'}}>
-          <Text>GET RESULTS</Text>
+          <Text style={styles.textStyle2}>To Get Results Press</Text>
         </TouchableOpacity>
         <View>
-      {this.state &&
-        <Text>
-          Results: {this.state.first}
+        <Text style={styles.textStyle2}>
+          Results:
         </Text>
-      }
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('')}}>
+      {this.state &&
+        <Text style={styles.textStyle2}>First Result is: {this.state.first}</Text>}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {this.props.navigation.navigate('')}}>
+      {this.state &&
+        <Text style={styles.textStyle2}>Second Result is: {this.state.second}</Text>}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {this.props.navigation.navigate('')}}>
+      {this.state &&
+        <Text style={styles.textStyle2}>Third Result is: {this.state.third}</Text>}
+      </TouchableOpacity>
     </View>
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -87,7 +97,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   textStyle: {
-    fontSize: 45
+    fontSize: 35
+  },
+  textStyle2: {
+    fontSize: 20
   },
   scrollView: {
     backgroundColor: Colors.lighter,
