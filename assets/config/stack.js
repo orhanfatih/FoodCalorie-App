@@ -3,6 +3,7 @@ import {createStackNavigator, createDrawerNavigator} from 'react-navigation-stac
 import Main from '../../screens/Main';
 import MainFood from '../../screens/MainFood';
 import SubFood from '../../screens/SubFood';
+import ResultsPage from '../../screens/ResultsPage';
 
 // import SecondScreen from '../../screens/SecondScreen';
 
@@ -24,6 +25,13 @@ const stack = createStackNavigator({
     },
     SubFood: {
         screen: SubFood,
+        navigationOptions: ({navigation}) => ({
+            headerShown: false,
+            gestureEnabled: false,
+        })
+    },
+    ResultsPage: {
+        screen: ResultsPage,
         navigationOptions: ({navigation}) => ({
             headerShown: false,
             gestureEnabled: false,

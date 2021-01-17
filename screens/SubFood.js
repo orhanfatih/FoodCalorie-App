@@ -7,16 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import {  SafeAreaView,  StyleSheet,  ScrollView,  View,  Text,  StatusBar,  Button,  TouchableOpacity,} from 'react-native';
 
 import { Header,  LearnMoreLinks,  Colors,  DebugInstructions,  ReloadInstructions,} from 'react-native/Libraries/NewAppScreen';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
@@ -31,25 +22,61 @@ export default class SubFood extends Component{
     third: null,
   }
 
-  getExample = async () => {
-    var that = this
-    const headers = {
-      'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
-    };
-    
-    Axios.get('http://10.0.2.2:8000/api/detail/', {
+  putSubfood = (choose) => {
+    console.log("SUB CHOOSEN FOOD",choose)
+    store._subfoodchoosen(choose)
+  fetch("http://10.0.2.2:8000/api/putsub/", {  
+    method: "PUT",
+    body: JSON.stringify({
+      sub_food: choose
+    }),
+    headers: {'Content-Type': 'application/json' }
+  })
+    .then(response => response.text())
+    .then(function (response) {
+      console.log("response :", response);
+})
+    .catch(function (error) {
+      console.log("error from image :", error);
+    }
+ )};
 
-  }, 
-    headers
-    ).then(function (result){
-      console.log('Result:' , result.data)
-      that.setState({first: result.data[0]})
-      that.setState({second: result.data[1]})
-      that.setState({third: result.data[2]})
-    }).catch((err) => {
-      console.log('Catch err:', JSON.stringify(err))
-    })
-  }
+ createFormData_2 = () => {
+  const data = new FormData();
+  data.append('main_food', JSON.stringify(this.state_2.main_food))
+
+  console.log("DATA_FOOD_NAME: ", data);
+
+  return data;
+};
+
+
+
+getResults= async () => {
+  var that = this
+  const headers = {
+    'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
+  };
+
+  Axios.get('http://10.0.2.2:8000/api/getcalorie/', {
+}, 
+  headers
+  ).then(function (result){
+    console.log('GETRESULTS:' , result.data)
+    console.log('GETRESULTS calorie: ' , result.data['calorie'])
+    console.log('GETRESULTS fat :' , result.data['fat'])
+
+    store._carbohydrate(result.data['carbohydrate'])
+    store._fat(result.data['fat'])
+    store._protein(result.data['protein'])
+    store._sugars(result.data['sugars'])
+    store._calorie(result.data['calorie'])
+    console.log('successful')
+  }).catch((err) => {
+    console.log('CAATCcathc err:', JSON.stringify(err))
+  })
+}
+
   render(){
     return(
 
@@ -61,15 +88,25 @@ export default class SubFood extends Component{
         </Text>
         <Text style={styles.textStyle2}>Press the SubFood Category</Text>
 
-        <TouchableOpacity onPress={() => {console.log("first one chosen")}} style={{backgroundColor:'yellow'}}>
+        <TouchableOpacity onPress={() => {
+          this.putSubfood(store.subfood1)
+          this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
+          this.props.navigation.navigate('ResultsPage')
+        }} style={{backgroundColor:'yellow'}}>
         <Text style={styles.textStyle2}>First Subfood: {store.subfood1}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => {}} style={{backgroundColor:'yellow'}}>
+        <TouchableOpacity onPress={() => {
+          this.putSubfood(store.subfood2)
+          this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
+        }} style={{backgroundColor:'yellow'}}>
         <Text style={styles.textStyle2}>Second Subfood: {store.subfood2}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => {}} style={{backgroundColor:'yellow'}}>
+        <TouchableOpacity onPress={() => {
+          this.putSubfood(store.subfood3)
+          this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
+        }} style={{backgroundColor:'yellow'}}>
         <Text style={styles.textStyle2}>Third Subfood: {store.subfood3}</Text>
         </TouchableOpacity>
 

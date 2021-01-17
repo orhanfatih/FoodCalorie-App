@@ -105,25 +105,16 @@ export default class Main extends Component{
         <Text style={styles.textStyle}>
           MainFood Sayfasi
         </Text>
-        {/* <TouchableOpacity onPress={() => {this.sendRequst()}}  
-          style={{backgroundColor:'blue'}} title='bu buton ikinci'>
-          <Text>Fotograf yukle</Text>
-        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => {this.takePhoto()}}  
           style={{backgroundColor:'yellow'}} title='bu buton'>
           <Text>Fotograf cekimi</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity onPress={() => {this.props.navigation.navigate('SubFood')}}
-        style={{backgroundColor:'blue'}} title='subfood button'>
-        <Text> Sub Food Direct</Text>
-        </TouchableOpacity> */}
 
         <TouchableOpacity onPress={() => {this.getExample()
           // console.log('first state: ', this.state.first)
           //this.props.navigation.navigate('MainFood')
         }}  style={{backgroundColor:'yellow'}}>
           <Text style={styles.textStyle2}>To Get Results Press</Text>
-          <Text>{store.deneme}</Text>
         </TouchableOpacity>
         
         <View>
@@ -161,14 +152,6 @@ export default class Main extends Component{
 
     sendRequst = () => {
       console.log("photo pring",this.state.photo);
-      // axios({
-      //   url: 'http://10.0.2.2:8000/api/image/',
-      //   method: 'POST',
-      //   // body: this.createFormData(this.state.photo),
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
-      // })
     fetch("http://10.0.2.2:8000/api/postimage/", {  
       method: "POST",
       body: this.createFormData(this.state.photo)
@@ -196,56 +179,6 @@ export default class Main extends Component{
   
 };
 
-  // sendRequst = () => {
-  //   // fetch("http://10.0.2.2:3000/api/upload", {
-  //   fetch("http://127.0.0.1:8000/api/image/", {  
-  //     method: "POST",
-  //     // body: this.createFormData(this.state.photo, { userId: "123" })
-  //     body: this.createFormData(this.state.photo)
-  //   })
-  //   .then(response => response.text())
-  //   .then(response => {
-  //     console.log("upload succes", response);
-  //     alert("Upload success!");
-  //     this.setState({ photo: null });
-  //   })
-  //   .catch(error => {
-  //     console.log("upload error", error);
-  //     alert("Upload failed!");
-  //   });
-  // };
-
-  // createFormData = ( photo ) => {
-  //   const data = new FormData();
-  //   console.log(data);
-  //   data.append("photo", {
-  //     name: this.state.photo.fileName,
-  //     type: this.state.photo.type,
-  //     uri:
-  //       Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-  //   });
-  //   console.log(2,data);
-
-  //   return data;
-  // };
-  // createFormData = (photo, body) => {
-  //   const data = new FormData();
-  
-  //   data.append("photo", {
-  //     name: photo.fileName,
-  //     type: photo.type,
-  //     uri:
-  //       Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-  //   });
-  
-  //   Object.keys(body).forEach(key => {
-  //     data.append(key, body[key]);
-  //   });
-  
-  //   return data;
-  // };
-
-
   sendRequst_2 = (choose) => {
     console.log("MAIN CHOOSEN FOOD",choose)
   fetch("http://10.0.2.2:8000/api/postmain/", {  
@@ -272,8 +205,9 @@ export default class Main extends Component{
 
   return data;
 };
-  
+
 }
+
 
 const styles = StyleSheet.create({
   container: {

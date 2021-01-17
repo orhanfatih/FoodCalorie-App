@@ -7,45 +7,31 @@
  */
 
 import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import {  SafeAreaView,  StyleSheet,  ScrollView,  View,  Text,  StatusBar,  Button,  TouchableOpacity,} from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {  Header,  LearnMoreLinks,  Colors,  DebugInstructions,  ReloadInstructions,} from 'react-native/Libraries/NewAppScreen';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import Axios from 'axios'
 import store from '../assets/config/store'
 
 
-export default class Main extends Component{
+export default class ResultsPage extends Component{
 
+ 
   render(){
     return(
 
       <View style={styles.container}>
         <View style={{width:wp('100%'), height:hp('60%')}}></View>
         
-        <Text style={styles.textStyle}>FoodCalorie App</Text>
+        <Text style={styles.textStyle}>ResultsPage</Text>
+        <Text style={styles.textStyle2}>Food is: {store.subfoodchoosen}</Text>
+        <Text style={styles.textStyle2}>Calorie: {store.calorie}</Text>
+        <Text style={styles.textStyle2}>Fat: {store.fat}</Text>
+        <Text style={styles.textStyle2}>Protein: {store.protein}</Text>
+        <Text style={styles.textStyle2}>Sugars: {store.sugars}</Text>
+        <Text style={styles.textStyle2}>Carbohydrate: {store.carbohydrate}</Text>
         
-        <TouchableOpacity onPress={() => {
-          // this.getExample()
-          this.props.navigation.navigate('MainFood')
-        }}  style={{backgroundColor:'yellow'}}>
-          <Text style={styles.sectionTitle}>Choose PHOTO</Text>
-        </TouchableOpacity>
       </View>
     );
   }
