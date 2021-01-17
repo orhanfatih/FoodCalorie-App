@@ -21,6 +21,7 @@ import {
 import { Header,  LearnMoreLinks,  Colors,  DebugInstructions,  ReloadInstructions,} from 'react-native/Libraries/NewAppScreen';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import Axios from 'axios'
+import store from '../assets/config/store'
 
 // store yada state
 export default class SubFood extends Component{
@@ -41,31 +42,37 @@ export default class SubFood extends Component{
   }, 
     headers
     ).then(function (result){
-      console.log('REESesult:' , result.data)
+      console.log('Result:' , result.data)
       that.setState({first: result.data[0]})
       that.setState({second: result.data[1]})
       that.setState({third: result.data[2]})
     }).catch((err) => {
-      console.log('CAATCcathc err:', JSON.stringify(err))
+      console.log('Catch err:', JSON.stringify(err))
     })
   }
   render(){
     return(
 
       <View style={styles.container}>
-        <View style={{width:wp('100%'), height:hp('60%')}}>
-
+        <View style={{width:wp('100%'), height:hp('40%')}}>
         </View>
         <Text style={styles.textStyle}>
             Subfood Page
         </Text>
-        <TouchableOpacity onPress={() => {
-          this.getExample()
-          // console.log('first state: ', this.state.first)
-          //this.props.navigation.navigate('MainFood')
-        }}  style={{backgroundColor:'yellow'}}>
-          <Text style={styles.textStyle2}>To Get Results Press</Text>
+        <Text style={styles.textStyle2}>Press the SubFood Category</Text>
+
+        <TouchableOpacity onPress={() => {console.log("first one chosen")}} style={{backgroundColor:'yellow'}}>
+        <Text style={styles.textStyle2}>First Subfood: {store.subfood1}</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => {}} style={{backgroundColor:'yellow'}}>
+        <Text style={styles.textStyle2}>Second Subfood: {store.subfood2}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => {}} style={{backgroundColor:'yellow'}}>
+        <Text style={styles.textStyle2}>Third Subfood: {store.subfood3}</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }

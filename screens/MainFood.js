@@ -30,18 +30,18 @@ export default class Main extends Component{
       // maxHeight: 550,
       // quality: 1,
     }
-    launchCamera(options, response => {
-      this.setState({ photo: response })
-      this.sendRequst()
-    })
-
-    // launchImageLibrary(options, response => {
-    //   // console.log('Response = ', response);
-    //   if (response.uri) {
+    // launchCamera(options, response => {
     //   this.setState({ photo: response })
     //   this.sendRequst()
-    //   }
     // })
+
+    launchImageLibrary(options, response => {
+      // console.log('Response = ', response);
+      if (response.uri) {
+      this.setState({ photo: response })
+      this.sendRequst()
+      }
+    })
   }
 
   state = {
@@ -56,7 +56,7 @@ export default class Main extends Component{
       'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
     };
     
-    Axios.get('http://10.0.2.2:8000/api/detail/', {
+    Axios.get('http://10.0.2.2:8000/api/getmain/', {
 
   }, 
     headers
@@ -70,6 +70,31 @@ export default class Main extends Component{
     })
   }
 
+  getSubFoodList= async () => {
+    var that = this
+    const headers = {
+      'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
+    };
+
+    Axios.get('http://10.0.2.2:8000/api/getsub/', {
+
+  }, 
+    headers
+    ).then(function (result){
+      console.log('GETSUBFOOD:' , result.data)
+      if (result.data){
+        store._subfood1(result.data[0])
+        store._subfood2(result.data[1])
+        store._subfood3(result.data[2])
+      }
+      else{
+        // direk result sayfasina gidicek, subfood secenegi olmayanlar
+      }
+    }).catch((err) => {
+      console.log('CAATCcathc err:', JSON.stringify(err))
+    })
+  }
+
 
   render(){
     return (
@@ -78,7 +103,7 @@ export default class Main extends Component{
         <Image style={{width:wp('100%')}} source={require('../assets/img/caesar.jpg')}/>
         </View>
         <Text style={styles.textStyle}>
-          bu bir 2.sayfa yazisiidir
+          MainFood Sayfasi
         </Text>
         {/* <TouchableOpacity onPress={() => {this.sendRequst()}}  
           style={{backgroundColor:'blue'}} title='bu buton ikinci'>
@@ -100,22 +125,31 @@ export default class Main extends Component{
           <Text style={styles.textStyle2}>To Get Results Press</Text>
           <Text>{store.deneme}</Text>
         </TouchableOpacity>
+        
         <View>
         <Text style={styles.textStyle2}>
           Results:
         </Text>
-          <TouchableOpacity onPress={() => {
-            this.sendRequst_2(this.state.first)
-            this.props.navigation.navigate('Main')
-          }}>
+      <TouchableOpacity onPress={() => {
+          this.sendRequst_2(this.state.first)
+          this.getSubFoodList()
+          this.props.navigation.navigate('SubFood')}}>
       {this.state &&
         <Text style={styles.textStyle2}>First Result is: {this.state.first}</Text>}
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => {this.sendRequst_2(this.state.second)}}>
+      
+      <TouchableOpacity onPress={() => {
+        this.sendRequst_2(this.state.second)
+        this.getSubFoodList()
+        this.props.navigation.navigate('SubFood')}}>
       {this.state &&
         <Text style={styles.textStyle2}>Second Result is: {this.state.second}</Text>}
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => {this.sendRequst_2(this.state.third)}}>
+      
+      <TouchableOpacity onPress={() => {
+        this.sendRequst_2(this.state.third)
+        this.getSubFoodList()
+        this.props.navigation.navigate('SubFood')}}>
       {this.state &&
         <Text style={styles.textStyle2}>Third Result is: {this.state.third}</Text>}
       </TouchableOpacity>
@@ -135,7 +169,7 @@ export default class Main extends Component{
       //     'Content-Type': 'multipart/form-data'
       //   }
       // })
-    fetch("http://10.0.2.2:8000/api/image/", {  
+    fetch("http://10.0.2.2:8000/api/postimage/", {  
       method: "POST",
       body: this.createFormData(this.state.photo)
     })
@@ -212,10 +246,9 @@ export default class Main extends Component{
   // };
 
 
-
   sendRequst_2 = (choose) => {
-    console.log("THIS IS NAME OFM",choose)
-  fetch("http://10.0.2.2:8000/api/detail/", {  
+    console.log("MAIN CHOOSEN FOOD",choose)
+  fetch("http://10.0.2.2:8000/api/postmain/", {  
     method: "POST",
     body: JSON.stringify({
       main_food: choose

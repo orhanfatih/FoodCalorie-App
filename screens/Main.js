@@ -31,11 +31,6 @@ import store from '../assets/config/store'
 
 
 export default class Main extends Component{
-  state = {
-    first: null,
-    second: null,
-    thirt: null,
-  }
 
   // getExample = async () => {
   //   var that = this
@@ -60,20 +55,12 @@ export default class Main extends Component{
     return(
 
       <View style={styles.container}>
-        <View style={{width:wp('100%'), height:hp('60%')}}>
-
-        </View>
-        <Text style={styles.textStyle}>
-          FoodCalorie App
-        </Text>
-        {/* <TouchableOpacity onPress={() => {
-          this.props.navigation.navigate('SubFood')
-        }} style={styles.textStyle}>
-          <Text>Go to subfood page</Text>
-          </TouchableOpacity> */}
+        <View style={{width:wp('100%'), height:hp('60%')}}></View>
+        
+        <Text style={styles.textStyle}>FoodCalorie App</Text>
+        
         <TouchableOpacity onPress={() => {
           // this.getExample()
-
           store._deneme('deneme')
           this.props.navigation.navigate('MainFood')
         }}  style={{backgroundColor:'yellow'}}>
