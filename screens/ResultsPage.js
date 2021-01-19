@@ -22,9 +22,9 @@ export default class ResultsPage extends Component{
     return(
 
       <View style={styles.container}>
-        <View style={{width:wp('100%'), height:hp('60%')}}></View>
+        <View style={{width:wp('100%'), height:hp('50%')}}></View>
         
-        <Text style={styles.textStyle}>ResultsPage</Text>
+        <Text style={styles.textStyle}>Results Page</Text>
         <Text style={styles.textStyle2}>Food is: {store.subfoodchoosen}</Text>
         <Text style={styles.textStyle2}>Calorie: {store.calorie}</Text>
         <Text style={styles.textStyle2}>Fat: {store.fat}</Text>
@@ -43,7 +43,13 @@ const styles = StyleSheet.create({
     flex: 1
   },
   textStyle: {
-    fontSize: 45
+    fontSize: 50,
+    alignSelf: 'center',
+    marginBottom:8,
+  },
+  textStyle2: {
+    fontSize: 22,
+    marginTop:4,
   },
   scrollView: {
     backgroundColor: Colors.lighter,

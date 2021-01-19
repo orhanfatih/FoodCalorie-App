@@ -13,6 +13,8 @@ import { Header,  LearnMoreLinks,  Colors,  DebugInstructions,  ReloadInstructio
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import Axios from 'axios'
 import store from '../assets/config/store'
+import NumericInput from 'react-native-numeric-input'
+import InputSpinner from "react-native-input-spinner"
 
 // store yada state
 export default class SubFood extends Component{
@@ -20,6 +22,7 @@ export default class SubFood extends Component{
     first: null,
     second: null,
     third: null,
+    value: 1,
   }
 
   putSubfood = (choose) => {
@@ -73,44 +76,72 @@ getResults= async () => {
     store._calorie(result.data['calorie'])
     console.log('successful')
   }).catch((err) => {
-    console.log('CAATCcathc err:', JSON.stringify(err))
+    console.log('Catch err sub food getResults:', JSON.stringify(err))
   })
-}
+};
+
+  sendPorsion = () => {
+    console.log('calculate(sendporsio)', store.fat)
+    console.log('calculate(sendporsio)', this.state.value *  store.fat)
+    store._carbohydrate(this.state.value * store.carbohydrate)
+    store._fat(this.state.value * store.fat)
+    store._protein(this.state.value * store.protein)
+    store._sugars(this.state.value * store.sugars)
+    store._calorie(this.state.value * store.calorie)
+    this.props.navigation.navigate('ResultsPage')
+};
 
   render(){
     return(
 
       <View style={styles.container}>
-        <View style={{width:wp('100%'), height:hp('40%')}}>
+        <View style={{width:wp('100%'), height:hp('45%')}}>
         </View>
         <Text style={styles.textStyle}>
             Subfood Page
         </Text>
-        <Text style={styles.textStyle2}>Press the SubFood Category</Text>
+        <Text style={styles.textStyle3}>Select a SubFood Category</Text>
 
         <TouchableOpacity onPress={() => {
           this.putSubfood(store.subfood1)
           this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
-          this.props.navigation.navigate('ResultsPage')
-        }} style={{backgroundColor:'yellow'}}>
+        }}>
         <Text style={styles.textStyle2}>First Subfood: {store.subfood1}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => {
           this.putSubfood(store.subfood2)
           this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
-        }} style={{backgroundColor:'yellow'}}>
+        }}>
         <Text style={styles.textStyle2}>Second Subfood: {store.subfood2}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => {
           this.putSubfood(store.subfood3)
           this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
-        }} style={{backgroundColor:'yellow'}}>
+        }}>
         <Text style={styles.textStyle2}>Third Subfood: {store.subfood3}</Text>
         </TouchableOpacity>
 
+        {/* <View>
+        <NumericInput type={'plus-minus'} value={this.state.value} onChange={value => this.setState({value})} />
+        </View> */}
+
+        {/* <View style={{alignSelf:'center', marginTop:15,marginBottom:15}}>
+        <InputSpinner showBorder={true}  max={10} min={1} step={1} color={"#40c5f4"} colorPress={"red"} fontSize={23} value={this.state.value} onChange={value => this.setState({value})}/>
+        </View> */}
+        <View style={{height:hp('7%'),alignSelf:'center', marginTop:8,marginBottom:5}}>
+          <InputSpinner max={10} min={1} step={1} color={"#40c5f4"} colorPress={"red"} fontSize={23} value={this.state.value} onChange={value => this.setState({value})}/>
+        </View>
+
+        <TouchableOpacity onPress={() => {this.sendPorsion()}} style={{backgroundColor:'blue',alignSelf:'center', marginTop:20,marginBottom:15,borderRadius: 100, 
+          width:wp('55%'), height:hp('6%'),justifyContent: 'center'}}>
+        <Text style={styles.sectionTitle}>Continue</Text>
+        </TouchableOpacity>
+
       </View>
+
+        
     );
   }
 }
@@ -120,10 +151,19 @@ const styles = StyleSheet.create({
     flex: 1
   },
   textStyle: {
-    fontSize: 35
+    fontSize: 50,
+    alignSelf: 'center',
+    marginBottom:15,
   },
   textStyle2: {
-    fontSize: 20
+    fontSize: 20,
+    marginTop:4,
+    marginBottom:7,
+  },
+  textStyle3: {
+    fontSize: 22,
+    marginTop:4,
+    marginBottom:7,
   },
   scrollView: {
     backgroundColor: Colors.lighter,
@@ -143,6 +183,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: Colors.black,
+    alignSelf: 'center',
+    color: 'white',
   },
   sectionDescription: {
     marginTop: 8,

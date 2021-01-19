@@ -1,6 +1,10 @@
 import { observable, action } from 'mobx'
 
 class Store {
+    @observable mainfood1
+    @observable mainfood2
+    @observable mainfood3
+    
     @observable subfood1
     @observable subfood2
     @observable subfood3
@@ -11,7 +15,15 @@ class Store {
     @observable sugars
     @observable calorie
  
-
+    @action _mainfood1(veri) {
+        this.mainfood1 = veri
+    }
+    @action _mainfood2(veri) {
+        this.mainfood2 = veri
+    }
+    @action _mainfood3(veri) {
+        this.mainfood3 = veri
+    }
     @action _subfood1(veri) {
         this.subfood1 = veri
     }
