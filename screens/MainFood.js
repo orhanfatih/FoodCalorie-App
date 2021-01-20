@@ -13,65 +13,14 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import {  launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Axios from 'axios'
 import store from '../assets/config/store'
+import { typeOf } from 'react-is';
 
 export default class Main extends Component{
-  // state = {
-  //   photo: null,
-  // }
   
   state_2 = {
     main_food: null
   }
 
-  // takePhoto = () => {
-  //   let options = {
-  //     noData: true,
-  //     // maxWidth: 300,
-  //     // maxHeight: 550,
-  //     // quality: 1,
-  //   }
-  //   // launchCamera(options, response => {
-  //   //   this.setState({ photo: response })
-  //   //   this.sendRequst()
-  //   //   this.getExample()
-  //   // })
-
-  //   launchImageLibrary(options, response => {
-  //     // console.log('Response = ', response);
-  //     if (response.uri) {
-  //     this.setState({ photo: response })
-  //     this.sendRequst()
-  //     this.getExample()
-  //     }
-  //   })
-    
-  // }
-  
-  // state = {
-  //   first: null,
-  //   second: null,
-  //   third: null,
-  // }
-
-  // getExample = async () => {
-  //   var that = this
-  //   const headers = {
-  //     'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
-  //   };
-    
-  //   Axios.get('http://10.0.2.2:8000/api/getmain/', {
-
-  // }, 
-  //   headers
-  //   ).then(function (result){
-  //     console.log('REESesult:' , result.data)
-  //     that.setState({first: result.data[0]})
-  //     that.setState({second: result.data[1]})
-  //     that.setState({third: result.data[2]})
-  //   }).catch((err) => {
-  //     console.log('CAATCcathc err:', JSON.stringify(err))
-  //   })
-  // }
 
   getSubFoodList= async () => {
     var that = this
@@ -85,44 +34,108 @@ export default class Main extends Component{
     headers
     ).then(function (result){
       console.log('GETSUBFOOD:' , result.data)
-      if (result.data){
+      var subfoodlistlength = Object.keys(result.data).length;
+      // console.log('LENGTH SUBLIST', subfoodlistlength)
+      // console.log('TYPE LENGTH SUBLIST', typeof(subfoodlistlength.toString()))
+      
+      if (subfoodlistlength.toString() == '1'){
+        console.log('if number is: ', subfoodlistlength)
         store._subfood1(result.data[0])
-        store._subfood2(result.data[1])
-        store._subfood3(result.data[2])
-        that.props.navigation.navigate('SubFood')
+        // this.getWeight()
+        that.props.navigation.navigate('SubFood', { data: result.data })
+        // that.props.navigation.navigate('SubFood')
       }
-      else{
-        console.log("Food dont have a sub category")
-        // direk result sayfasina gidicek, subfood secenegi olmayanlar
-        this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
-        this.props.navigation.navigate('ResultsPage')
+      else if (subfoodlistlength.toString() == '2'){
+        console.log('if number is: ', subfoodlistlength)
+        store._subfood1(result.data[0])
+        store._subfood1(result.data[1])
+        // this.getWeight()
+        that.props.navigation.navigate('SubFood', { data: result.data })
+        // that.props.navigation.navigate('SubFood')
+      }
+      else if (subfoodlistlength.toString() == '3'){
+        console.log('if number is: ', subfoodlistlength)
+        store._subfood1(result.data[0])
+        store._subfood1(result.data[1])
+        store._subfood3(result.data[2])
+        // this.getWeight()
+        that.props.navigation.navigate('SubFood', { data: result.data })
+        // that.props.navigation.navigate('SubFood')
+      }
+      else if (subfoodlistlength.toString() == '4'){
+        console.log('if number is: ', subfoodlistlength)
+        store._subfood1(result.data[0])
+        store._subfood1(result.data[1])
+        store._subfood3(result.data[2])
+        store._subfood3(result.data[3])
+        // this.getWeight()
+        that.props.navigation.navigate('SubFood', { data: result.data })
+      }
+      else if (subfoodlistlength.toString() == '5'){
+        console.log('if number is: ', subfoodlistlength)
+        store._subfood1(result.data[0])
+        store._subfood1(result.data[1])
+        store._subfood3(result.data[2])
+        store._subfood3(result.data[3])
+        store._subfood3(result.data[4])
+        // this.getWeight()
+        that.props.navigation.navigate('SubFood', { data: result.data })
       }
     }).catch((err) => {
       console.log('CAATCcathc err:', JSON.stringify(err))
     })
   }
-  getResults= async () => {
+
+
+  getWeight = async () => {
     var that = this
     const headers = {
       'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
     };
-  
-    Axios.get('http://10.0.2.2:8000/api/getcalorie/', {
+    Axios.get('http://10.0.2.2:8000/api/getweight/', {
+
   }, 
     headers
     ).then(function (result){
-      console.log('GETRESULTS:' , result.data)
-      console.log('GETRESULTS calorie: ' , result.data['calorie'])
-      console.log('GETRESULTS fat :' , result.data['fat'])
+      console.log('GETWEIGHT:' , result.data)
+      var weightlistlength = Object.keys(result.data).length;
+      // console.log('LENGTH SUBLIST', weightlistlength)
+      // console.log('TYPE LENGTH SUBLIST', typeof(weightlistlength.toString()))
   
-      store._carbohydrate(result.data['carbohydrate'])
-      store._fat(result.data['fat'])
-      store._protein(result.data['protein'])
-      store._sugars(result.data['sugars'])
-      store._calorie(result.data['calorie'])
-      console.log('successful')
+      if (weightlistlength.toString() == '1'){
+        console.log('if number is WEIGHT: ', weightlistlength)
+        store._weight1(result.data[0])
+      }
+      else if (weightlistlength.toString() == '2'){
+        console.log('if number is WEIGHT: ', weightlistlength)
+        store._weight1(result.data[0])
+        store._weight1(result.data[1])
+      }
+      else if (weightlistlength.toString() == '3'){
+        console.log('if number is WEIGHT: ', weightlistlength)
+        store._weight1(result.data[0])
+        store._weight1(result.data[1])
+        store._weight1(result.data[2])
+      }
+      else if (weightlistlength.toString() == '4'){
+        console.log('if number is WEIGHT: ', weightlistlength)
+        store._weight1(result.data[0])
+        store._weight1(result.data[1])
+        store._weight1(result.data[2])
+        store._weight1(result.data[3])
+      }
+      else if (weightlistlength.toString() == '5'){
+        console.log('if number is WEIGHT: ', weightlistlength)
+        store._weight1(result.data[0])
+        store._weight1(result.data[1])
+        store._weight1(result.data[2])
+        store._weight1(result.data[3])
+        store._weight1(result.data[4])
+      }
+      
+
     }).catch((err) => {
-      console.log('CAATCcathc err:', JSON.stringify(err))
+      console.log('CAATCcathc WEIGHT err:', JSON.stringify(err))
     })
   }
 
@@ -131,7 +144,7 @@ export default class Main extends Component{
     return (
       <View style={styles.container}>
         <View style={{width:wp('100%'), height:hp('50%')}}>
-        <Image style={{width:wp('100%')}} source={require('../assets/img/caesar.jpg')}/>
+        <Image style={{width:wp('100%')}} source={require('../assets/img/i01_steak.jpeg')}/>
         </View>
         <Text style={styles.textStyle}>
           MainFood Page
@@ -155,7 +168,6 @@ export default class Main extends Component{
         <Text style={styles.textStyle2}>First Result is: {store.mainfood1}</Text>}
       </TouchableOpacity> */}
       <TouchableOpacity onPress={() => {
-        console.log("burayageldi,", store.mainfood1)
           this.sendRequst_2(store.mainfood1)
           this.getSubFoodList()}}>
 
@@ -241,7 +253,8 @@ export default class Main extends Component{
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    marginTop:35,
+    flex: 1,
   },
   textStyle: {
     fontSize: 40,

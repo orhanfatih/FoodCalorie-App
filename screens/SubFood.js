@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import {  SafeAreaView,  StyleSheet,  ScrollView,  View,  Text,  StatusBar,  Button,  TouchableOpacity,} from 'react-native';
+import {  FlatList ,SafeAreaView,  StyleSheet,  ScrollView,  View,  Text,  StatusBar,  Button,  TouchableOpacity,} from 'react-native';
 
 import { Header,  LearnMoreLinks,  Colors,  DebugInstructions,  ReloadInstructions,} from 'react-native/Libraries/NewAppScreen';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
@@ -23,7 +23,9 @@ export default class SubFood extends Component{
     second: null,
     third: null,
     value: 1,
+    data: [],
   }
+  
 
   putSubfood = (choose) => {
     console.log("SUB CHOOSEN FOOD",choose)
@@ -68,7 +70,7 @@ getResults= async () => {
     console.log('GETRESULTS:' , result.data)
     console.log('GETRESULTS calorie: ' , result.data['calorie'])
     console.log('GETRESULTS fat :' , result.data['fat'])
-
+    console.log('tip: ', typeof(result.data['fat']))
     store._carbohydrate(result.data['carbohydrate'])
     store._fat(result.data['fat'])
     store._protein(result.data['protein'])
@@ -91,45 +93,48 @@ getResults= async () => {
     this.props.navigation.navigate('ResultsPage')
 };
 
+componentWillMount() {
+  const { navigation } = this.props
+  var data = navigation.getParam('data')
+  this.setState({ data: data })
+}
+
+renderData(data, key) {
+  var a = 0;
+  return (
+    <TouchableOpacity onPress={() => {
+      this.putSubfood(data)
+      this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
+    }}>
+    <Text style={styles.textStyle2}>First Subfood: {data} {store.weight1}</Text>
+    </TouchableOpacity>
+  )
+  a = a+1;
+}
+
+
   render(){
     return(
-
       <View style={styles.container}>
-        <View style={{width:wp('100%'), height:hp('45%')}}>
+        <View style={{width:wp('100%'), height:hp('35%')}}>
         </View>
         <Text style={styles.textStyle}>
             Subfood Page
         </Text>
         <Text style={styles.textStyle3}>Select a SubFood Category</Text>
 
-        <TouchableOpacity onPress={() => {
-          this.putSubfood(store.subfood1)
-          this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
-        }}>
-        <Text style={styles.textStyle2}>First Subfood: {store.subfood1}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => {
-          this.putSubfood(store.subfood2)
-          this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
-        }}>
-        <Text style={styles.textStyle2}>Second Subfood: {store.subfood2}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => {
-          this.putSubfood(store.subfood3)
-          this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
-        }}>
-        <Text style={styles.textStyle2}>Third Subfood: {store.subfood3}</Text>
-        </TouchableOpacity>
+        <FlatList
+                showsVerticalScrollIndicator={false}
+                style={{ flex: 1, }}
+                data={this.state.data}
+                keyExtractor={(item) => item.key}
+                renderItem={({ item, index }) => this.renderData(item, index)}
+            />
 
         {/* <View>
         <NumericInput type={'plus-minus'} value={this.state.value} onChange={value => this.setState({value})} />
         </View> */}
 
-        {/* <View style={{alignSelf:'center', marginTop:15,marginBottom:15}}>
-        <InputSpinner showBorder={true}  max={10} min={1} step={1} color={"#40c5f4"} colorPress={"red"} fontSize={23} value={this.state.value} onChange={value => this.setState({value})}/>
-        </View> */}
         <View style={{height:hp('7%'),alignSelf:'center', marginTop:8,marginBottom:5}}>
           <InputSpinner max={10} min={1} step={1} color={"#40c5f4"} colorPress={"red"} fontSize={23} value={this.state.value} onChange={value => this.setState({value})}/>
         </View>
@@ -158,7 +163,6 @@ const styles = StyleSheet.create({
   textStyle2: {
     fontSize: 20,
     marginTop:4,
-    marginBottom:7,
   },
   textStyle3: {
     fontSize: 22,
