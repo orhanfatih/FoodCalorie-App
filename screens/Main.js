@@ -56,7 +56,10 @@ export default class Main extends Component{
       if (response.uri) {
       this.setState({ photo: response })
       this.sendRequst()
+      store._image(this.state.photo)
+      console.log("storelandi", this.state.photo.uri)
       this.getExample()
+      console.log('blablabla')
       }
     })
     
@@ -71,11 +74,15 @@ export default class Main extends Component{
     
     Axios.get('http://10.0.2.2:8000/api/getmain/', {
 
-  }, 
+  },
     headers
     ).then(function (result){
-      console.log('REESesult:' , result.data)
+      console.log('RESULT GET MAINFOOD:' , result.data)
       if (result.data){
+        store._mainfood1('')
+        store._mainfood2('')
+        store._mainfood3('')
+        console.log('mainfood3 deger ', store.mainfood3)
         store._mainfood1(result.data[0])
         store._mainfood2(result.data[1])
         store._mainfood3(result.data[2])
@@ -85,7 +92,7 @@ export default class Main extends Component{
         console.log("Error in data, photo selection")
       }
     }).catch((err) => {
-      console.log('CAATCcathc err:', JSON.stringify(err))
+      console.log('Catch err MAIN GETTING MAINFOOD:', JSON.stringify(err))
     })
   }
 
@@ -120,7 +127,7 @@ export default class Main extends Component{
       console.log("response :", response);
 })
     .catch(function (error) {
-      console.log("error from image :", error);
+      console.log("error POSTING IMAGE :", error);
     }
  )};
 

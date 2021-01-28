@@ -24,7 +24,7 @@ export default class ResultsPage extends Component{
       <View style={styles.container}>
         <View style={{width:wp('100%'), height:hp('50%')}}></View>
         
-        <Text style={styles.textStyle}>Results Page</Text>
+        {/* <Text style={styles.textStyle}>Food Calorie</Text> */}
         <Text style={styles.textStyle2}>Food is: {store.subfoodchoosen}</Text>
         <Text style={styles.textStyle2}>Calorie: {store.calorie}</Text>
         <Text style={styles.textStyle2}>Fat: {store.fat}</Text>
@@ -32,6 +32,13 @@ export default class ResultsPage extends Component{
         <Text style={styles.textStyle2}>Sugars: {store.sugars}</Text>
         <Text style={styles.textStyle2}>Carbohydrate: {store.carbohydrate}</Text>
         
+
+        <TouchableOpacity onPress={() => {
+          this.props.navigation.navigate('Main')
+        }}  style={{backgroundColor:'blue', alignSelf:'center', width:wp('60%'), 
+        height:hp('10%'), borderRadius: 100,justifyContent: 'center', marginTop:40}}>
+          <Text style={styles.sectionTitle}>Go Back To Main</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -44,7 +51,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 50,
-    alignSelf: 'center',
+    alignSelf: 'baseline',
     marginBottom:8,
   },
   textStyle2: {
@@ -69,6 +76,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: Colors.black,
+    alignSelf: 'center',
+    color: 'white'
   },
   sectionDescription: {
     marginTop: 8,

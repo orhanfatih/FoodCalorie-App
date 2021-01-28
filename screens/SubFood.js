@@ -24,6 +24,7 @@ export default class SubFood extends Component{
     third: null,
     value: 1,
     data: [],
+    key:[],
   }
   
 
@@ -42,7 +43,7 @@ export default class SubFood extends Component{
       console.log("response :", response);
 })
     .catch(function (error) {
-      console.log("error from image :", error);
+      console.log("error ON PUTSUBFOOD :", error);
     }
  )};
 
@@ -57,30 +58,29 @@ export default class SubFood extends Component{
 
 
 
-getResults= async () => {
-  var that = this
-  const headers = {
-    'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
+  getResults= async () => {
+    var that = this
+    const headers = {
+      'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
+    };
+    Axios.get('http://10.0.2.2:8000/api/getcalorie/', {
+  }, 
+    headers
+    ).then(function (result){
+      console.log('GETRESULTS:' , result.data)
+      console.log('GETRESULTS calorie: ' , result.data['calorie'])
+      console.log('GETRESULTS fat :' , result.data['fat'])
+      console.log('tip: ', typeof(result.data['fat']))
+      store._carbohydrate(result.data['carbohydrate'])
+      store._fat(result.data['fat'])
+      store._protein(result.data['protein'])
+      store._sugars(result.data['sugars'])
+      store._calorie(result.data['calorie'])
+      console.log('successful')
+    }).catch((err) => {
+      console.log('Catch ERROR ON SUBFOOD GETCALORIE:', JSON.stringify(err))
+    })
   };
-
-  Axios.get('http://10.0.2.2:8000/api/getcalorie/', {
-}, 
-  headers
-  ).then(function (result){
-    console.log('GETRESULTS:' , result.data)
-    console.log('GETRESULTS calorie: ' , result.data['calorie'])
-    console.log('GETRESULTS fat :' , result.data['fat'])
-    console.log('tip: ', typeof(result.data['fat']))
-    store._carbohydrate(result.data['carbohydrate'])
-    store._fat(result.data['fat'])
-    store._protein(result.data['protein'])
-    store._sugars(result.data['sugars'])
-    store._calorie(result.data['calorie'])
-    console.log('successful')
-  }).catch((err) => {
-    console.log('Catch err sub food getResults:', JSON.stringify(err))
-  })
-};
 
   sendPorsion = () => {
     console.log('calculate(sendporsio)', store.fat)
@@ -96,20 +96,20 @@ getResults= async () => {
 componentWillMount() {
   const { navigation } = this.props
   var data = navigation.getParam('data')
-  this.setState({ data: data })
+  var key = navigation.getParam('key')
+  this.setState({ data: data, key: key})
 }
 
 renderData(data, key) {
-  var a = 0;
+  key=key+1
   return (
     <TouchableOpacity onPress={() => {
       this.putSubfood(data)
       this.getResults() // burada result degerlerini alicaz ve degerleri store yapicaz
     }}>
-    <Text style={styles.textStyle2}>First Subfood: {data} {store.weight1}</Text>
+    <Text style={styles.textStyle2}>{key}) {data}</Text>
     </TouchableOpacity>
   )
-  a = a+1;
 }
 
 

@@ -5,6 +5,8 @@ class Store {
     @observable mainfood2
     @observable mainfood3
     
+    @observable image
+
     @observable subfood1
     @observable subfood2
     @observable subfood3
@@ -25,6 +27,10 @@ class Store {
     }
     @action _mainfood3(veri) {
         this.mainfood3 = veri
+    }
+
+    @action _image(veri){
+        this.image = veri
     }
 
     @action _subfood1(veri) {
